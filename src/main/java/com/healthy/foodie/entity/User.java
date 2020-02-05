@@ -17,13 +17,13 @@ import lombok.Setter;
 @Table
 @Getter
 @Setter
-public class Customer {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long customerId;
-	private String customerName;
+	private Long userId;
+	private String userName;
 	private String password;
-	private Long phoneNumber;
+	private Long mobileNumber;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 }

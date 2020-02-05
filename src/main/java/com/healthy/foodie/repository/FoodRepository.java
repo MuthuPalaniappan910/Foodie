@@ -8,4 +8,6 @@ import com.healthy.foodie.entity.Food;
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
+	Food findByFoodId(Long foodId);
+
 }

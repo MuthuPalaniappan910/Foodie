@@ -18,7 +18,7 @@ public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
-	private long customerId;
+	private Long customerId;
 	private String orderStatus;
 	private LocalDate orderPlacedDate;
 	private Double totalPrice;
