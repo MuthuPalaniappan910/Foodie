@@ -1,10 +1,10 @@
 package com.healthy.foodie.exception;
 
-public class CustomerNotFoundException  extends Exception{
+public class MenuNotFoundException  extends Exception{
 	
 	private static final long serialVersionUID = 1L;
 
-	 public CustomerNotFoundException(String exception) {
+	 public MenuNotFoundException(String exception) {
 		
 		super(exception);
 	}
