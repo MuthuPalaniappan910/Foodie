@@ -46,7 +46,7 @@ public class VendorController {
 		vendorResponseDto.setStatusCode(HttpStatus.OK.value());
 		return vendorResponseDto;
 	}
-	
+
 	/**
 	 * @author Vinod B N
 	 * 

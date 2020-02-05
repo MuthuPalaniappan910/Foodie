@@ -29,6 +29,7 @@ import com.healthy.foodie.repository.VendorRepository;
 */
 @Service
 public class VendorServiceImpl implements VendorService {
+
 	private static final Logger logger = LoggerFactory.getLogger(VendorServiceImpl.class);
 	@Autowired
 	VendorRepository vendorRepository;
@@ -58,6 +59,11 @@ public class VendorServiceImpl implements VendorService {
 		return list;
 	}
 
+	/**
+	 * @author Vinod B N
+	 * @param orderRequest, paymenttype,customerId
+	 * @return orderId
+	 */
 	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymenttype, Long customerId) {
 		logger.info("Inside VendorServiceImpl of orderAndPayment");
 		OrderDetail orderDetail = new OrderDetail();
