@@ -44,7 +44,7 @@ public class CustomerController {
 			orderHistoryDto.setStatuscode(ApplicationConstants.SUCCESS_CODE);
 			orderHistoryDto.setMessage(ApplicationConstants.ORDER_HISTORY_SUCCESSMESSAGE);
 			orderHistoryDto.setOrderDetails(orderDetails);
-			return new ResponseEntity<OrderHistoryDto>(orderHistoryDto, HttpStatus.OK);
+			return new ResponseEntity<>(orderHistoryDto, HttpStatus.OK);
 		}
 		return null;
 	}

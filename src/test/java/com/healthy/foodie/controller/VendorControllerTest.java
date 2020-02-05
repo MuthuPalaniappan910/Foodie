@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.healthy.foodie.dto.MenuList;
 import com.healthy.foodie.dto.MenuResponseDto;
+import com.healthy.foodie.exception.MenuNotFoundException;
 import com.healthy.foodie.exception.VendorNotFoundException;
 import com.healthy.foodie.service.VendorService;
 
@@ -27,6 +28,8 @@ public class VendorControllerTest {
 	List<MenuList> menuList = null;
 	MenuList menu = null;
 	List<MenuList> menuList1 = null;
+	MenuList menuList2 = null;
+	MenuList menuList3 = null;
 
 	@InjectMocks
 	VendorController vendorController;
@@ -45,10 +48,16 @@ public class VendorControllerTest {
 		menuList.add(menu);
 
 		menuList1 = new ArrayList<>();
+
+		menuList2 = new MenuList();
+		menuList2.setMenuId(1L);
+		menuList2.setMenuName("Dosa");
+		menuList2.setMenuPrice(200.00);
+
 	}
 
 	@Test
-	public void testGetMenuDetailsPositive() throws VendorNotFoundException {
+	public void testGetVendorDetailsPositive() throws VendorNotFoundException {
 		Long vendorId = 100L;
 		Mockito.when(vendorService.getVendorDetails(vendorId)).thenReturn(menuList);
 		ResponseEntity<MenuResponseDto> response = vendorController.getVendorDetails(vendorId);
@@ -56,11 +65,26 @@ public class VendorControllerTest {
 	}
 
 	@Test
-	public void testGetMenuDetailsNegative() throws VendorNotFoundException {
+	public void testGetVendorDetailsNegative() throws VendorNotFoundException {
 		Long vendorId = 100L;
 		Mockito.when(vendorService.getVendorDetails(vendorId)).thenReturn(menuList1);
 		ResponseEntity<MenuResponseDto> response = vendorController.getVendorDetails(vendorId);
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 
+	@Test
+	public void testGetMenuDetailsPositive() throws MenuNotFoundException {
+		Long menuId = 10L;
+		Mockito.when(vendorService.getMenuDetails(10L)).thenReturn(menuList3);
+		ResponseEntity<MenuList> response = vendorController.getMenuDetails(menuId);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
+
+	@Test
+	public void testGetMenuDetailsNegative() throws MenuNotFoundException {
+		Long menuId = 10L;
+		Mockito.when(vendorService.getMenuDetails(menuId)).thenReturn(menuList3);
+		ResponseEntity<MenuList> response = vendorController.getMenuDetails(11L);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
 }
