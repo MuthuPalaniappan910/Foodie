@@ -2,54 +2,31 @@ package com.healthy.foodie.service;
 
 
 import java.time.LocalDate;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.healthy.foodie.constants.ApplicationConstants;
+import com.healthy.foodie.dto.MenuList;
 import com.healthy.foodie.dto.OrderRequestDto;
 import com.healthy.foodie.dto.OrderResponseDto;
 import com.healthy.foodie.dto.OrderedMenu;
+import com.healthy.foodie.entity.Food;
 import com.healthy.foodie.entity.Menu;
 import com.healthy.foodie.entity.OrderDetail;
 import com.healthy.foodie.entity.OrderedItem;
 import com.healthy.foodie.entity.Vendor;
-import com.healthy.foodie.exception.NoVendorAvailableException;
-import com.healthy.foodie.repository.MenuRepository;
-import com.healthy.foodie.repository.OrderDetaiRepository;
-import com.healthy.foodie.repository.VendorRepository;
-
-/*
- * Method is used to view the list of Vendors available in the Application and Order menu for a particular vendor
-*/
-@Service
-public class VendorServiceImpl implements VendorService {
-
-	private static final Logger logger = LoggerFactory.getLogger(VendorServiceImpl.class);
-	@Autowired
-	VendorRepository vendorRepository;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.healthy.foodie.constants.ApplicationConstants;
-import com.healthy.foodie.dto.MenuList;
-import com.healthy.foodie.entity.Food;
-import com.healthy.foodie.entity.Menu;
 import com.healthy.foodie.exception.MenuNotFoundException;
+import com.healthy.foodie.exception.NoVendorAvailableException;
 import com.healthy.foodie.exception.VendorNotFoundException;
 import com.healthy.foodie.repository.FoodRepository;
 import com.healthy.foodie.repository.MenuRepository;
+import com.healthy.foodie.repository.OrderDetaiRepository;
+import com.healthy.foodie.repository.VendorRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,8 +38,13 @@ public class VendorServiceImpl implements VendorService {
 	MenuRepository menuRepository;
 
 	@Autowired
-
+	FoodRepository foodRepository;
+	
+	@Autowired
 	OrderDetaiRepository orderDetaiRepository;
+	
+	@Autowired
+	VendorRepository vendorRepository;
 
 	/**
 	 * @author Vinod B N
@@ -72,13 +54,13 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public List<Vendor> getAllVendor() {
-		logger.info("Inside VendorServiceImpl of method getAllVendor");
+		log.info("Inside VendorServiceImpl of method getAllVendor");
 		List<Vendor> list = vendorRepository.findAll();
 		if (list.isEmpty()) {
-			logger.error("No vendor available right now");
+			log.error("No vendor available right now");
 			throw new NoVendorAvailableException(ApplicationConstants.NO_VENDOR_AVAILABLE);
 		}
-		logger.info(ApplicationConstants.VENDOR_AVAILABLE);
+		log.info(ApplicationConstants.VENDOR_AVAILABLE);
 		System.out.println(list);
 		return list;
 	}
@@ -89,7 +71,7 @@ public class VendorServiceImpl implements VendorService {
 	 * @return orderId
 	 */
 	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymenttype, Long customerId) {
-		logger.info("Inside VendorServiceImpl of orderAndPayment");
+		log.info("Inside VendorServiceImpl of orderAndPayment");
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setCustomerId(customerId);
 		orderDetail.setOrderPlacedDate(LocalDate.now());
@@ -107,7 +89,7 @@ public class VendorServiceImpl implements VendorService {
 		});
 		orderDetail.setItems(items);
 		if (pay(paymenttype).equalsIgnoreCase(ApplicationConstants.PAYMENT_SUCCESSFULL)) {
-			logger.info("Payment success and Confirmed Ordered");
+			log.info("Payment success and Confirmed Ordered");
 			orderDetail.setOrderStatus(ApplicationConstants.ORDERED);
 		}
 		OrderDetail savedOrderDetail = orderDetaiRepository.save(orderDetail);
@@ -116,9 +98,7 @@ public class VendorServiceImpl implements VendorService {
 		orderResponseDto.setMessage(ApplicationConstants.ORDERED_SUCCESSFULL);
 		orderResponseDto.setStatusCode(HttpStatus.ACCEPTED.value());
 		return orderResponseDto;
-
-
-	FoodRepository foodRepository;
+	}
 
 	/**
 	 * @author Muthu

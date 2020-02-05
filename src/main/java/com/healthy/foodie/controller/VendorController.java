@@ -1,12 +1,6 @@
 package com.healthy.foodie.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +9,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthy.foodie.constants.ApplicationConstants;
+import com.healthy.foodie.dto.MenuList;
+import com.healthy.foodie.dto.MenuResponseDto;
 import com.healthy.foodie.dto.OrderRequestDto;
 import com.healthy.foodie.dto.OrderResponseDto;
 import com.healthy.foodie.dto.VendorResponseDto;
 import com.healthy.foodie.entity.Vendor;
+import com.healthy.foodie.exception.MenuNotFoundException;
+import com.healthy.foodie.exception.VendorNotFoundException;
+import com.healthy.foodie.service.VendorService;
 import com.healthy.foodie.service.VendorServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * Method is used to view the list of Vendor available in the application 
  */
-@CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
-@RestController
-@RequestMapping("/vendors")
-
-import com.healthy.foodie.dto.MenuList;
-import com.healthy.foodie.dto.MenuResponseDto;
-import com.healthy.foodie.exception.MenuNotFoundException;
-import com.healthy.foodie.exception.VendorNotFoundException;
-import com.healthy.foodie.service.VendorService;
-
-import lombok.extern.slf4j.Slf4j;
-
 @RequestMapping("/vendors")
 @RestController
 @Slf4j
