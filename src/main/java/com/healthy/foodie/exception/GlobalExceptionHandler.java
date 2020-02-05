@@ -9,7 +9,12 @@ import com.healthy.foodie.constants.ApplicationConstants;
 import com.healthy.foodie.dto.ResponseDto;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler {	
+	@ExceptionHandler(OrderHistoryNotFoundException.class)
+	public ResponseEntity<ResponseDto> OrderHistoryNotFoundException() {
+		ResponseDto responseDto = new ResponseDto();
+		responseDto.setMessage(ApplicationConstants.ORDER_HISTORY_NOT_FOUND_MESSAGE);
+		responseDto.setStatusCode(ApplicationConstants.NOT_FOUND);
 
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseDto> userNotFoundException() {

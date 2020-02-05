@@ -7,7 +7,5 @@ import com.healthy.foodie.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-
 	User findBymobileNumberAndPassword(Long mobileNumber, String password);
-
 }
