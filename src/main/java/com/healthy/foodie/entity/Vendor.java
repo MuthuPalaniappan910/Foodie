@@ -18,4 +18,5 @@ public class Vendor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long vendorId;
 	private String vendorName;
+	private String image;
 }
