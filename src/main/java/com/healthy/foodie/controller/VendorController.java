@@ -93,15 +93,14 @@ public class VendorController {
 	 * @author Vinod B N
 	 * 
 	 * 
-	 * @param orderRequest , paymenttype ,customerId
+	 * @param orderRequest , paymentType ,customerId
 	 * @return ordrerId
 	 * @return response with User message and status code
 	 * 
 	 */
 	@PostMapping("/customers/{customerId}/orders")
-	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymenttype, Long customerId) {
-		return vendorServiceImpl.orderAndPayment(orderRequest, paymenttype, customerId);
-
+	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymentType, Long customerId) {
+		return vendorServiceImpl.orderAndPayment(orderRequest, paymentType, customerId);
 	}
 
 	/**

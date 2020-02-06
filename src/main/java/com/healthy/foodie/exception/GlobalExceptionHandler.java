@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(NoVendorAvailableException.class)
-	public ResponseEntity<ResponseDto> NoVendorAvailableException() {
+	public ResponseEntity<ResponseDto> noVendorAvailableException() {
 		ResponseDto responseDto = new ResponseDto();
 		responseDto.setMessage(ApplicationConstants.NO_VENDOR_AVAILABLE);
 		responseDto.setStatusCode(ApplicationConstants.NOTFOUND_CODE);

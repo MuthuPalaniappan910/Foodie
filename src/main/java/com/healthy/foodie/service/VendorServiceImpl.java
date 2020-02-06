@@ -1,6 +1,5 @@
 package com.healthy.foodie.service;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +38,15 @@ public class VendorServiceImpl implements VendorService {
 
 	@Autowired
 	FoodRepository foodRepository;
-	
+
 	@Autowired
 	OrderDetaiRepository orderDetaiRepository;
-	
+
 	@Autowired
 	VendorRepository vendorRepository;
+
+	@Autowired
+	PaymentRegistery paymentRegistery;
 
 	/**
 	 * @author Vinod B N
@@ -61,16 +63,15 @@ public class VendorServiceImpl implements VendorService {
 			throw new NoVendorAvailableException(ApplicationConstants.NO_VENDOR_AVAILABLE);
 		}
 		log.info(ApplicationConstants.VENDOR_AVAILABLE);
-		System.out.println(list);
 		return list;
 	}
 
 	/**
 	 * @author Vinod B N
-	 * @param orderRequest, paymenttype,customerId
+	 * @param orderRequest, paymentType,customerId
 	 * @return orderId
 	 */
-	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymenttype, Long customerId) {
+	public OrderResponseDto orderAndPayment(OrderRequestDto orderRequest, String paymentType, Long customerId) {
 		log.info("Inside VendorServiceImpl of orderAndPayment");
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setCustomerId(customerId);
@@ -88,17 +89,16 @@ public class VendorServiceImpl implements VendorService {
 			orderDetail.setTotalPrice(totprice);
 		});
 		orderDetail.setItems(items);
-		if (pay(paymenttype).equalsIgnoreCase(ApplicationConstants.PAYMENT_SUCCESSFULL)) {
-			log.info("Payment success and Confirmed Ordered");
-			orderDetail.setOrderStatus(ApplicationConstants.ORDERED);
-		}
+		orderDetail.setOrderStatus(ApplicationConstants.ORDERED);
+		String response = paymentRegistery.getServiceBean(paymentType).payment(paymentType);
 		OrderDetail savedOrderDetail = orderDetaiRepository.save(orderDetail);
 		OrderResponseDto orderResponseDto = new OrderResponseDto();
 		orderResponseDto.setOrderId(savedOrderDetail.getOrderId());
-		orderResponseDto.setMessage(ApplicationConstants.ORDERED_SUCCESSFULL);
+		orderResponseDto.setMessage(response);
 		orderResponseDto.setStatusCode(HttpStatus.ACCEPTED.value());
 		return orderResponseDto;
 	}
+	
 
 	/**
 	 * @author Muthu
@@ -119,7 +119,7 @@ public class VendorServiceImpl implements VendorService {
 			log.error(ApplicationConstants.VENDOR_NOTFOUND_MESSAGE);
 			throw new VendorNotFoundException(ApplicationConstants.VENDOR_NOTFOUND_MESSAGE);
 		}
-		menuList.forEach(menu -> {			
+		menuList.forEach(menu -> {
 			Food food = foodRepository.findByFoodId(menu.getFoodId());
 			MenuList menuDetails = new MenuList();
 			menuDetails.setMenuId(menu.getMenuId());
@@ -154,9 +154,5 @@ public class VendorServiceImpl implements VendorService {
 		menuList.setMenuPrice(menu.get().getPrice());
 		return menuList;
 
-	}
-
-	public String pay(String paymentType) {
-		return ApplicationConstants.PAYMENT_SUCCESSFULL;
 	}
 }

@@ -29,7 +29,7 @@ public class VendorControllerTest {
 	MenuList menu = null;
 	List<MenuList> menuList1 = null;
 	MenuList menuList2 = null;
-	MenuList menuList3 = null;
+	MenuList menuList4 = null;
 
 	@InjectMocks
 	VendorController vendorController;
@@ -75,16 +75,16 @@ public class VendorControllerTest {
 	@Test
 	public void testGetMenuDetailsPositive() throws MenuNotFoundException {
 		Long menuId = 10L;
-		Mockito.when(vendorService.getMenuDetails(10L)).thenReturn(menuList3);
+		Mockito.when(vendorService.getMenuDetails(10L)).thenReturn(menuList2);
 		ResponseEntity<MenuList> response = vendorController.getMenuDetails(menuId);
-		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
 	@Test
 	public void testGetMenuDetailsNegative() throws MenuNotFoundException {
 		Long menuId = 10L;
-		Mockito.when(vendorService.getMenuDetails(menuId)).thenReturn(menuList3);
-		ResponseEntity<MenuList> response = vendorController.getMenuDetails(11L);
+		Mockito.when(vendorService.getMenuDetails(menuId)).thenReturn(menuList4);
+		ResponseEntity<MenuList> response = vendorController.getMenuDetails(10L);
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 }
