@@ -2,7 +2,9 @@ package com.healthy.foodie.service;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.http.HttpStatus;
 
+import com.healthy.foodie.constants.ApplicationConstants;
 import com.healthy.foodie.dto.OrderRequestDto;
 import com.healthy.foodie.dto.OrderResponseDto;
 import com.healthy.foodie.dto.OrderedMenu;
@@ -40,6 +43,8 @@ public class VendorServiceImplTest {
 	MenuRepository menuRepository;
 	@Mock
 	OrderDetaiRepository orderDetaiRepository;
+	@Mock
+	PaymentRegistery paymentRegistery;
 	
 	@Test
 	public void getAllVendorTest() {
@@ -64,9 +69,15 @@ public class VendorServiceImplTest {
 		OrderResponseDto responseDto = new OrderResponseDto();
 		OrderRequestDto request = new OrderRequestDto();
 		OrderDetail orderDetail = new OrderDetail();
-		List<OrderedItem> items = new ArrayList<>();
+		OrderedItem items = new OrderedItem();
 		OrderedMenu orderMenu = new OrderedMenu();
 		Menu menu = new Menu();
+		String paymentType = "PayTm";
+		orderDetail.setOrderPlacedDate(LocalDate.now());
+		orderDetail.setOrderId(1L);
+		orderDetail.setCustomerId(1L);
+		orderDetail.setOrderStatus("Ordered");
+		orderDetail.setTotalPrice(items.getMenuPrice());
 		menu.setMenuId(1L);
 		menu.setFoodId(1L);
 		menu.setPrice(45.0);
@@ -77,8 +88,10 @@ public class VendorServiceImplTest {
 		request.setVendorId(1l);
 		orderMenu.setMenuId(1L);
 		orderMenu.setQuantity(2);
+		items.setMenuPrice(menu.getPrice()*orderMenu.getQuantity());
 		OngoingStubbing<Optional<Menu>> menu1 = Mockito.when(menuRepository.findById(1L)).thenReturn(Optional.of(menu));
 		assertNotNull(menu1);
+		
 	}
 
 

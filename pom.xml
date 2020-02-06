@@ -17,6 +17,16 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<sonar.coverage.exclusions>
+			**/FoodieApplication.java*,
+			**/dto/*,
+			**/entity/*,
+			**/util/*,
+			**/constants/*,
+			**/config/*,
+			**/GlobalExceptionHandler.java*,
+			**/CustomExceptionHandler.java*,
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -66,6 +76,13 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus</id>
+			<url>http://13.233.254.86:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<plugins>

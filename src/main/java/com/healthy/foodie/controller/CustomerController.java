@@ -19,33 +19,36 @@ import com.healthy.foodie.service.CustomerService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 @Slf4j
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
+
 	/**
 	 * @author Karthika
 	 * 
-	 *         Method is used to view the list of orders made by the particular customer
+	 *         Method is used to view the list of orders made by the particular
+	 *         customer
 	 * 
 	 * @param customerId
-	 * @return OrderHistoryDto Displays the order details along with a status
-	 *         code and message
-	 * @throws OrderHistoryNotFoundException 
+	 * @return OrderHistoryDto Displays the order details along with a status code
+	 *         and message
+	 * @throws OrderHistoryNotFoundException
 	 */
 	@GetMapping("/{customerId}/orders")
-	public ResponseEntity<OrderHistoryDto> getOrderHistory(@PathVariable Long customerId) throws OrderHistoryNotFoundException {
+	public ResponseEntity<OrderHistoryDto> getOrderHistory(@PathVariable Long customerId)
+			throws OrderHistoryNotFoundException {
 		List<OrderDetails> orderDetails = customerService.getOrderHistory(customerId);
-		if(orderDetails != null) {
+		if (orderDetails != null) {
 			OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
 			orderHistoryDto.setStatuscode(ApplicationConstants.SUCCESS_CODE);
 			orderHistoryDto.setMessage(ApplicationConstants.ORDER_HISTORY_SUCCESSMESSAGE);
 			orderHistoryDto.setOrderDetails(orderDetails);
-			return new ResponseEntity<OrderHistoryDto>(orderHistoryDto, HttpStatus.OK);
+			return new ResponseEntity<>(orderHistoryDto, HttpStatus.OK);
 		}
 		return null;
 	}

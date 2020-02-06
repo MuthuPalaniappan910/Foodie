@@ -19,6 +19,4 @@ public class Vendor {
 	private Long vendorId;
 	private String vendorName;
 	private String image;
-
-
 }

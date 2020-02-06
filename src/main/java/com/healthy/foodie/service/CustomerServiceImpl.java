@@ -23,12 +23,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<OrderDetails> getOrderHistory(Long customerId) throws OrderHistoryNotFoundException {
 		List<OrderDetail> orderDetail = orderDetailRepository.findByCustomerId(customerId);
 		List<OrderDetails> listoforders = new ArrayList<>();
-		OrderDetails orderDetails = new OrderDetails();
 
 		if (orderDetail.isEmpty()) {
 			throw new OrderHistoryNotFoundException(ApplicationConstants.ORDER_HISTORY_NOT_FOUND_MESSAGE);
 		}
 		orderDetail.forEach(order -> {
+			OrderDetails orderDetails = new OrderDetails();
 			BeanUtils.copyProperties(order, orderDetails);
 			listoforders.add(orderDetails);
 		});

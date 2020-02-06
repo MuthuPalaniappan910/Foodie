@@ -2,8 +2,6 @@ package com.healthy.foodie.dto;
 
 import java.util.List;
 
-import com.healthy.foodie.entity.Menu;
-
 public class OrderRequestDto {
 	
 	private Long vendorId;
