@@ -1,5 +1,6 @@
 package com.healthy.foodie.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ import com.healthy.foodie.repository.VendorRepository;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	AdminRequestDto adminRequestDto= null;
+	ResponseDto responseDto = null;
+	List<MenuDetail> menuDetails= null;
+	MenuDetail menuDetail1=null;
+	MenuDetail menuDetail2=null;
+	
 	@Autowired
 	private VendorRepository vendorRepository;
 	
@@ -33,10 +40,14 @@ public class AdminServiceImpl implements AdminService {
 		Optional<Vendor> vendor=vendorRepository.findByVendorName(adminRequestDto.getVendorName());
 		Vendor vendordetail= new Vendor();
 		if(!(vendor.isPresent())){
-			vendordetail = new Vendor();
 			vendordetail.setVendorName(adminRequestDto.getVendorName());
 			vendordetail.setImage(adminRequestDto.getVendorImage());
 			vendordetail=vendorRepository.save(vendordetail);
+		}
+		else {
+			vendordetail.setVendorId(vendor.get().getVendorId());
+			vendordetail.setVendorName(vendor.get().getVendorName());
+			vendordetail.setImage(vendor.get().getImage());
 		}
 		for (MenuDetail menudetail : adminRequestDto.getMenuDetails()) {
 			Menu menu= new Menu();
