@@ -49,7 +49,8 @@ public class CustomerController {
 			orderHistoryDto.setOrderDetails(orderDetails);
 			return new ResponseEntity<>(orderHistoryDto, HttpStatus.OK);
 		}
-		return null;
+		OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+		return new ResponseEntity<>(orderHistoryDto, HttpStatus.NOT_FOUND);
 	}
 
 }
