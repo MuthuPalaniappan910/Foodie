@@ -24,6 +24,7 @@
 			**/util/*,
 			**/constants/*,
 			**/config/*,
+			**/servicelocator/*,
 			**/GlobalExceptionHandler.java*,
 			**/CustomExceptionHandler.java*,
 		</sonar.coverage.exclusions>
@@ -80,7 +81,7 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>nexus</id>
-			<url>http://13.233.254.86:8081/nexus/content/repositories/snapshots</url>
+			<url>http://52.66.140.63:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
